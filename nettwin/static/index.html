@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f0e2">
+  <title>NetTwin — Network change lab</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <header class="mast">
+    <a class="mark" href="/">NetTwin<span>↗</span></a>
+    <span>IPv4 NETWORK CHANGE LAB</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div>
+        <h1>Before the switch.</h1>
+        <p>Model a routing change and see which traffic still gets through.</p>
+      </div>
+      <div class="controls">
+        <label for="scenario">Change scenario</label>
+        <select id="scenario">
+          <option value="withdraw">Withdraw the service route</option>
+          <option value="cost">Raise an uplink cost</option>
+          <option value="isolation">Connect the guest network</option>
+          <option value="unchanged">Keep the original topology</option>
+        </select>
+        <label class="drill"><input type="checkbox" id="drill" checked> Simulate each link failing</label>
+      </div>
+    </section>
+    <p id="message" class="message" role="status">Loading topology…</p>
+    <div id="results" hidden>
+      <section class="workbench">
+        <div class="diagram">
+          <div class="diagram-head">
+            <div>
+              <h2>Topology</h2>
+              <p id="map-caption"></p>
+            </div>
+            <div class="switch" aria-label="Displayed snapshot">
+              <button type="button" id="before" aria-pressed="false">Before</button>
+              <button type="button" id="after" aria-pressed="true">After</button>
+            </div>
+          </div>
+          <canvas id="map" role="img" aria-label="Network topology"></canvas>
+          <div class="legend"><span>Selected route</span><span>Changed link</span><span>Other link</span></div>
+        </div>
+        <aside class="policy-pane" aria-labelledby="policy-title">
+          <div class="policy-head"><h2 id="policy-title">Traffic policies</h2><span id="verdict"></span></div>
+          <div id="policies"></div>
+          <div id="route"></div>
+        </aside>
+      </section>
+      <div class="reports">
+        <section><h2>Configuration changes</h2><ul id="changes"></ul></section>
+        <section><h2>Single-link failures</h2><ul id="failures"></ul></section>
+      </div>
+    </div>
+    <details>
+      <summary>Compare your own snapshots</summary>
+      <label for="input">JSON with baseline, candidate, and policies</label>
+      <textarea id="input" rows="12" spellcheck="false"></textarea>
+      <div class="actions"><button id="run" type="button">Compare snapshots</button><button id="download" type="button" disabled>Download report</button></div>
+    </details>
+  </main>
+</body>
+</html>
